@@ -5,3 +5,4 @@ sse-starlette==0.10.3
 uvicorn==0.18.2
 aioredis==2.0.1
 cachetools==5.2.0
+websockets==10.3

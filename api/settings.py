@@ -7,6 +7,6 @@ class Settings(BaseSettings):
     PORT: int = 8000
     DEBUG: bool = True
 
-    REDIS: RedisDsn = ""
+    REDIS: RedisDsn = "redis://localhost"
 
 settings = Settings()

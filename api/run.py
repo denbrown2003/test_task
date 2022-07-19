@@ -1,4 +1,3 @@
-from pip import main
 from uvicorn import run
 from settings import settings
 

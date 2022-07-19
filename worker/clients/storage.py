@@ -25,3 +25,9 @@ class Storage:
 
     async def update_ticker(self, ticker: Ticker) -> None:
         await self.client.add_tick(ticker.name, ticker.last_tick.dict())
+
+    async def save_active_ticker(self, tickers: List[Ticker]) -> None:
+        payload = {
+            "active": list(map(lambda x: x.name, tickers))
+        }
+        await self.client.set("active_tickers", payload)

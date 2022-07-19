@@ -43,6 +43,7 @@ class PriceGenerator:
                     last_tick=last_tick
                     )
             )
+        await self.storage.save_active_ticker(self.tickers)
 
     async def worker(self):
         for ticker in self.tickers:
