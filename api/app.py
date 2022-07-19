@@ -1,3 +1,4 @@
+from sys import prefix
 from fastapi import FastAPI, WebSocket
 from clients.redis import create_connect
 
@@ -7,7 +8,7 @@ from clients.chanells import ChannelListener
 
 app = FastAPI(title="Prices Generator")
 
-@app.websocket("/ticker/{name}/ws")
+@app.websocket("/api/ticker/{name}/ws")
 async def websocket_endpoint(websocket: WebSocket, name: str):
     await websocket.accept()
     channel_name = f"channel:{name}"
@@ -20,12 +21,21 @@ async def websocket_endpoint(websocket: WebSocket, name: str):
     await websocket.close()
 
 
-@app.get("/tickers")
+@app.get("/api/tickers")
 async def get_tickers():
     storage = Storage()
     tickers = await storage.get_active_tickers()
-    return tickers
-    
+    return {
+        "data": tickers
+    }
+
+@app.get("/api/tickers/{name}/history")
+async def get_history(name: str, limit: int = 30):
+    storage = Storage()
+    history = await storage.get_ticker_history(name, limit)
+    return {
+        "data": history
+    }
 
 
 @app.get("/healthcheck")
