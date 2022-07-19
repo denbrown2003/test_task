@@ -7,7 +7,7 @@ class Settings(BaseSettings):
     DEBUG: bool = True
     REDIS: RedisDsn = "redis://localhost"
     TICKER_NAME_PREFIX: str = "ticker"
-    TICKER_RANGE: Tuple[int, int] = (0, 99)
+    TICKER_RANGE: Tuple[int, int] = (0, 100)
 
 
 settings = Settings()
