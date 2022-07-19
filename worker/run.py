@@ -1,8 +1,9 @@
 import asyncio
-from worker.services.price import PriceGenerator
-
+from services.price import PriceGenerator
+from clients.redis import create_connect
 
 
 if __name__ == "__main__":
+    create_connect("default")
     app = PriceGenerator()
     asyncio.run(app.start())
