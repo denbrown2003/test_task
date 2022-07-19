@@ -2,17 +2,12 @@ import React, {useState, useEffect} from "react"
 import { Get } from '../api/client'
 import { getAllTicker } from '../api/endpoints'
 import { Form } from 'react-bootstrap'
-
-
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import NavDropdown from 'react-bootstrap/NavDropdown';
 
 
-
-
-const SymbolSelector = ({callbackChange, ...props}) => {
+const SymbolSelector = ({callbackChange, changeLimitCallback, ...props}) => {
     const[tickers, setTickers] = useState([])
 
     useEffect(_=>{
@@ -32,15 +27,30 @@ const SymbolSelector = ({callbackChange, ...props}) => {
                 <div className="symbols">
                   <Form.Select 
                       aria-label="Ticker"
-                      onChange={e=>{callbackChange(e.target.value)}}
+                      onChange={e=>{
+                        callbackChange(e.target.value)
+                      }}
                       >
                         <option value="" selected disabled hidden>Choose Ticker</option>
                     {renderItems()}
                 </Form.Select>
                   </div>
               </div>
-
               </Nav>
+
+            <Nav className="lg ml-4">
+            <div className="ml-4">
+              <Form.Select 
+                      aria-label="Ticker"
+                      onChange={e => changeLimitCallback(e.target.value)}
+                      >
+                        <option value={0} selected>Full History</option>
+                        <option value={30}>Last 30</option>
+                        <option value={50}>Last 50</option>
+                        <option value={100}>Last 100</option>
+                </Form.Select>
+                </div>
+                </Nav>
               <Nav>
                 
               </Nav>

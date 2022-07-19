@@ -1,16 +1,4 @@
-import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip } from 'recharts';
-
-
-const renderCustomAxisTick = ({ x, y, payload }) => {
-  let path = '';
-
-  var date = new Date(payload.value * 1000);
-
-//   console.log(date.toLocaleTimeString())
-  path = date.toLocaleTimeString()
-  return <text>{path}</text>
-};
-
+import { LineChart, Line, CartesianGrid, XAxis, YAxis } from 'recharts';
 
 
 const PriceChart = ({prices, ...props}) => {
@@ -38,11 +26,10 @@ const PriceChart = ({prices, ...props}) => {
         <div className="chart">
             
             <LineChart width={window.screen.width - 500} height={window.screen.height - 400} data={prices} margin={{ top: 20, right: 50, bottom: 50, left: 50 }}>
-                <Line type="monotone" dataKey="price" stroke="#000caf" isAnimationActive={false}/>
+                <Line type="monotone" dataKey="price" stroke="#000caf" isAnimationActive={false} dot={false}/>
                 <CartesianGrid stroke="#828af5" strokeDasharray="5 5" />
                 <XAxis dataKey="time" angle={-45} dy={20} stroke="#000"/>
                 <YAxis domain={[min, max]}  stroke="#000"/>
-                <Tooltip />
             </LineChart>
         </div>
     </div>

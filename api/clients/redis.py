@@ -28,8 +28,11 @@ class RedisClient:
         payload = orjson.dumps(data)
         await self._con.zadd(key, {payload: score})
 
-    async def get_ticks(self, key: str, limit: int) -> List[Dict]:
-        data = await self._con.zrange(key, -limit, -1)
+    async def get_ticks(self, key: str, limit: int = None) -> List[Dict]:
+        if limit is None:
+            data = await self._con.zrangebyscore(key, "-inf", "+inf")
+        else:
+            data = await self._con.zrange(key, -limit, -1)
         return list(map(lambda x: orjson.loads(x), data))
 
     async def subscribe(self, routes: List[str]):

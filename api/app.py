@@ -30,7 +30,7 @@ async def get_tickers():
     }
 
 @app.get("/api/tickers/{name}/history")
-async def get_history(name: str, limit: int = 30):
+async def get_history(name: str, limit: int = None):
     storage = Storage()
     history = await storage.get_ticker_history(name, limit)
     return {

@@ -10,9 +10,6 @@ import PriceApp from './components/PriceApp';
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-       
-      </header>
       <div clasName="content">
           <PriceApp />
         </div>

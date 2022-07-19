@@ -9,20 +9,11 @@
   margin: 20px;
 }
 
-.content {
-}
-
-.apprice {
-  
-}
-
 .selector {
   display: block ruby;
   width: 100%;
 }
 
-.symbols {
-}
 .chart{
   display: flex;
   flex-direction: row;

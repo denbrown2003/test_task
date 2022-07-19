@@ -13,3 +13,6 @@ class Storage:
 
     async def get_ticker_history(self, ticker: str, limit: int) -> List[Dict]:
         return await self.client.get_ticks(ticker, limit)
+
+    async def get_full_history(self, ticker: str) -> List[Dict]:
+        return await self.client.get_ticks(ticker)

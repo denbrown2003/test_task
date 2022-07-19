@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react"
+import React from "react"
 import { priceStreamer, getTickerHistory } from '../api/endpoints'
 import SymbolSelector from './SymbolSelector'
 import { Get } from '../api/client'
@@ -28,7 +28,6 @@ class WsListener {
     }
 
     close(){
-        console.log("close handler")
         this.conn.close()
     }
 
@@ -47,6 +46,7 @@ class PriceApp extends React.Component {
             history: [],
             ticker: null,
             loading: false,
+            limit: null
         }
 
         this.ws = null;
@@ -54,15 +54,18 @@ class PriceApp extends React.Component {
 
         this.SelectorCallback = this.SelectorCallback.bind(this)
         this.wsCallback = this.wsCallback.bind(this)
+        this.LimitChangeCallback = this.LimitChangeCallback.bind(this)
     }
 
     wsCallback(data){
-      this.setState({history: [...this.state.history.slice(-29), data]})
+      this.setState({history: [...this.state.history, data]})
     }
 
-    SelectorCallback(ticker){
-        this.setState({loading: true});
-        Get(getTickerHistory(ticker), (rsp) => {this.setState({history: rsp.data, loading: false})})
+    SelectorCallback(ticker, limit=null){
+        this.setState({loading: true, ticker: ticker});
+        var url = getTickerHistory(ticker, limit);
+        console.log(url, this.state.limit, this.state.ticker)
+        Get(url, (rsp) => {this.setState({history: rsp.data, loading: false})})
             
         if(this.ws){
             this.ws.close();
@@ -71,10 +74,18 @@ class PriceApp extends React.Component {
         this.ws.connect(ticker)
     }
 
+    LimitChangeCallback(limit){
+        this.setState({limit: limit});
+        this.SelectorCallback(this.state.ticker, limit);
+    }
+
     render(){
         return (<div className="apprice">
 
-            <SymbolSelector callbackChange={this.SelectorCallback} />
+            <SymbolSelector 
+                callbackChange={this.SelectorCallback}
+                changeLimitCallback={this.LimitChangeCallback} 
+            />
 
             {this.state.history.length > 0 ? (<>
                 {this.state.loading ? (
