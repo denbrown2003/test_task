@@ -1,5 +1,5 @@
 To run app:
 
 ```console
-dockee-compose up
+docker-compose up
 ```
