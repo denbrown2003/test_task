@@ -1,3 +1,4 @@
 worker/venv
 api/venv
 *.pyc
+front/node_modules

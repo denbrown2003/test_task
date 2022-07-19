@@ -1,23 +1,21 @@
-import logo from './logo.svg';
-import './App.css';
+import './styles/App.css';
+import { useState, useEffect } from 'react'
+import { Button, Form } from 'react-bootstrap'
+import { Get } from './api/client'
+import { getAllTicker, priceStreamer } from './api/endpoints'
+import SymbolSelector from './components/SymbolSelector'
+import PriceApp from './components/PriceApp';
+
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+       
       </header>
+      <div clasName="content">
+          <PriceApp />
+        </div>
     </div>
   );
 }
