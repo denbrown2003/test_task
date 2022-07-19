@@ -1,2 +1,3 @@
 worker/venv
 api/venv
+*.pyc
