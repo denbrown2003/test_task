@@ -1,0 +1,10 @@
+FROM python:3.10.5-slim-buster
+
+COPY worker/requirements.txt requirements.txt
+RUN pip install -r requirements.txt
+
+WORKDIR /app
+
+COPY worker/ .
+RUN pip install -r requirements.txt
+CMD python run.py

@@ -1,0 +1,32 @@
+version: '3'
+
+services:
+
+  api:
+    container_name: api
+    build:
+      context: .
+      dockerfile: Dockerfile.api
+    environment:
+      - REDIS=redis://db
+    ports:
+      - 8000:8000
+    links:
+      - db
+
+  db:
+    container_name: db
+    image: redis:6.2-alpine
+    restart: always
+    ports:
+      - 6379:6379
+  
+  worker:
+    container_name: worker
+    build: 
+      context: .
+      dockerfile: Dockerfile.worker
+    environment:
+      - REDIS=redis://db
+    links:
+      - db
